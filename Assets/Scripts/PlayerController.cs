@@ -9,13 +9,40 @@ public class PlayerController : MonoBehaviour
     public float walkSpeed = 5f;
     Vector2 moveInput;
 
-    Rigidbody2D rb2d;
+    private bool _isMoving = false;
 
-    public bool isMoving { get; private set; }
+    public bool isMoving
+    {
+        get => _isMoving;
+        private set
+        {
+            _isMoving = value;
+            animator.SetBool("isMoving", value);
+        }
+    }
+
+    Rigidbody2D rb2d;
+    Animator animator;
+
+    private bool _isFacingRight = true;
+    public bool IsFacingRight
+    {
+        get => _isFacingRight;
+        private set
+        {
+            if (_isFacingRight != value)
+            {
+                transform.localScale *= new Vector2(-1, 1);
+            }
+
+            _isFacingRight = value;
+        }
+    }
 
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
 
     // Start is called before the first frame update
@@ -39,5 +66,19 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = context.ReadValue<Vector2>();
         isMoving = moveInput != Vector2.zero;
+        SetFacingDirection(moveInput);
+    }
+
+    private void SetFacingDirection(Vector2 moveInput)
+    {
+        if (moveInput.x > 0 && !IsFacingRight)
+        {
+            IsFacingRight = true;
+        }
+        else if( moveInput.x < 0 && IsFacingRight)
+        {
+            IsFacingRight = false;
+        }
+
     }
 }
