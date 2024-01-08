@@ -15,7 +15,10 @@ public class PlayerController : MonoBehaviour
             if (touchingDirections.IsOnWall) {
                 return 0;
             }
-            return walkSpeed;
+            else
+            {
+                return walkSpeed;
+            }
         }
         set
         {
@@ -89,6 +92,14 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetTrigger(AnimationStrings.jump);
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpImpulse);
+        }
+    }
+
+    public void onAttack(InputAction.CallbackContext context)
+    {
+        if (context.started && touchingDirections.IsGrounded)
+        {
+            animator.SetTrigger(AnimationStrings.attack);
         }
     }
 
