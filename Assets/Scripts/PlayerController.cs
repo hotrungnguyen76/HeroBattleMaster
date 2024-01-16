@@ -3,22 +3,34 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
+[RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections), typeof(Damageable))]
 public class PlayerController : MonoBehaviour
 {
-
     public float walkSpeed = 5f;
+    Rigidbody2D rb2d;
+    Animator animator;
+    TouchingDirections touchingDirections;
+    Damageable damageable;
 
     public float WalkSpeed
     {
         get {
-            if (touchingDirections.IsOnWall) {
-                return 0;
+            if (CanMove)
+            {
+                if (touchingDirections.IsOnWall)
+                {
+                    return 0;
+                }
+                else
+                {
+                    return walkSpeed;
+                }
             }
             else
             {
-                return walkSpeed;
+                return 0;
             }
+            
         }
         set
         {
@@ -43,13 +55,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    Rigidbody2D rb2d;
-    Animator animator;
-    TouchingDirections touchingDirections;
+    public bool IsAlive
+    {
+        get => animator.GetBool(AnimationStrings.isAlive);
+    }
 
     private bool _isFacingRight = true;
-    
-
     public bool IsFacingRight
     {
         get => _isFacingRight;
@@ -64,31 +75,45 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool CanMove
+    {
+        get => animator.GetBool(AnimationStrings.canMove);
+    }
+
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         touchingDirections = GetComponent<TouchingDirections>();
+        damageable = GetComponent<Damageable>();
     }
 
     private void FixedUpdate()
     {
-        
-        rb2d.velocity = new Vector2(moveInput.x * WalkSpeed * Time.fixedDeltaTime, rb2d.velocity.y);
+        if (!damageable.IsHit) rb2d.velocity = new Vector2(moveInput.x * WalkSpeed * Time.fixedDeltaTime, rb2d.velocity.y);
         
     }
 
     public void onMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
-        isMoving = moveInput != Vector2.zero;
-        SetFacingDirection(moveInput);
+
+        if (IsAlive)
+        {
+            isMoving = moveInput != Vector2.zero;
+            SetFacingDirection(moveInput);
+        }
+        else
+        {
+            isMoving = false;
+        }
+        
     }
 
     public void onJump(InputAction.CallbackContext context)
     {
         // To do: Check if alive 
-        if (context.started && touchingDirections.IsGrounded)
+        if (context.started && touchingDirections.IsGrounded && CanMove)
         {
             animator.SetTrigger(AnimationStrings.jump);
             rb2d.velocity = new Vector2(rb2d.velocity.x, jumpImpulse);
@@ -103,8 +128,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
     private void SetFacingDirection(Vector2 moveInput)
     {
         if (moveInput.x > 0 && !IsFacingRight)
@@ -116,5 +139,17 @@ public class PlayerController : MonoBehaviour
             IsFacingRight = false;
         }
 
+    }
+
+    public void OnHit(int damage, Vector2 knockback)
+    {
+        if (IsFacingRight)
+        {
+            rb2d.velocity = new Vector2(-1 *knockback.x, rb2d.velocity.y + knockback.y);
+        }
+        else
+        {
+            rb2d.velocity = new Vector2( knockback.x, rb2d.velocity.y + knockback.y);
+        }
     }
 }

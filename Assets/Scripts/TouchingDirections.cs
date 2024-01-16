@@ -14,7 +14,7 @@ public class TouchingDirections : MonoBehaviour
 
     public float groundDistance = 0.05f;
     public float wallDistance = 0.2f;
-    public float ceilingDistance = 0.05f;
+    //public float ceilingDistance = 0.05f;
 
     private Vector2 wallCheckDirection => gameObject.transform.localScale.x > 0 ? Vector2.right : Vector2.left;
 
@@ -43,18 +43,18 @@ public class TouchingDirections : MonoBehaviour
         }
     }
 
-    [SerializeField]
-    private bool _isOnCeling;
+    //[SerializeField]
+    //private bool _isOnCeiling;
 
-    public bool IsOnCeiling
-    {
-        get => _isOnCeling;
-        private set
-        {
-            _isOnWall = value;
-            animator.SetBool(AnimationStrings.isOnCeiling, value);
-        }
-    }
+    //public bool IsOnCeiling
+    //{
+    //    get => _isOnCeiling;
+    //    private set
+    //    {
+    //        _isOnCeiling = value;
+    //        animator.SetBool(AnimationStrings.isOnCeiling, value);
+    //    }
+    //}
 
     private void Awake()
     {
@@ -72,7 +72,7 @@ public class TouchingDirections : MonoBehaviour
     {
         IsGrounded = touchingCol.Cast(Vector2.down, castFilter, groundHits,  groundDistance) > 0;
         IsOnWall = touchingCol.Cast(wallCheckDirection, castFilter, wallHits, wallDistance) > 0;
-        IsOnCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
+        //IsOnCeiling = touchingCol.Cast(Vector2.up, castFilter, ceilingHits, ceilingDistance) > 0;
 
     }
 }
