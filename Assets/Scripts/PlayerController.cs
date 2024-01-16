@@ -42,8 +42,9 @@ public class PlayerController : MonoBehaviour
 
     Vector2 moveInput;
 
-    private bool _isMoving = false;
+    //public bool CanChangeDirection => animator.GetBool(AnimationStrings.canChangeDirection);
 
+    private bool _isMoving = false;
 
     public bool isMoving
     {
@@ -128,17 +129,26 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void onSkill1(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            animator.SetTrigger(AnimationStrings.skillAttack);
+        }
+    }
+
     private void SetFacingDirection(Vector2 moveInput)
     {
-        if (moveInput.x > 0 && !IsFacingRight)
-        {
-            IsFacingRight = true;
-        }
-        else if( moveInput.x < 0 && IsFacingRight)
-        {
-            IsFacingRight = false;
-        }
-
+        
+            if (moveInput.x > 0 && !IsFacingRight)
+            {
+                IsFacingRight = true;
+            }
+            else if (moveInput.x < 0 && IsFacingRight)
+            {
+                IsFacingRight = false;
+            }
+        
     }
 
     public void OnHit(int damage, Vector2 knockback)

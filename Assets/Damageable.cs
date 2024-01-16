@@ -101,13 +101,30 @@ public class Damageable : MonoBehaviour
     public void Hit(int damage, Vector2 knockback)
     {
         if (IsAlive && !isInvincible)
-        {
-
+        { 
             CurrentHealth -= damage;
             isInvincible = true;
 
             IsHit = true;
             damageableHit?.Invoke(damage, knockback);
+            CharacterEvents.characterDamaged.Invoke(gameObject, damage);
+        }
+    }
+
+    public void Heal(int health)
+    {
+        if (IsAlive)
+        {
+            if (CurrentHealth + health <= MaxHealth)
+            {
+                CurrentHealth += health;
+            }
+            else
+            {
+                CurrentHealth = MaxHealth;
+            }
+            
+            CharacterEvents.characterHealed.Invoke(gameObject, health);
         }
     }
 }

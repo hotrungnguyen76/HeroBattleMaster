@@ -13,7 +13,7 @@ public class TouchingDirections : MonoBehaviour
     RaycastHit2D[] ceilingHits = new RaycastHit2D[5];
 
     public float groundDistance = 0.05f;
-    public float wallDistance = 0.2f;
+    public float wallDistance = 0.05f;
     //public float ceilingDistance = 0.05f;
 
     private Vector2 wallCheckDirection => gameObject.transform.localScale.x > 0 ? Vector2.right : Vector2.left;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Attack : MonoBehaviour
 {
     Collider2D attackCollider;
-    public int attackDamgage = 10;
+    public int attackDamage = 10;
     public Vector2 knockback = Vector2.zero;
 
     // Start is called before the first frame update
@@ -28,8 +28,7 @@ public class Attack : MonoBehaviour
         {
             if (damageable.IsAlive)
             {
-                damageable.Hit(attackDamgage, knockback);
-                Debug.Log(collision.name + "hit " + attackDamgage);
+                damageable.Hit(attackDamage, knockback);
             }
             
             
