@@ -23,10 +23,10 @@ public class ProjectileScript : MonoBehaviour
             projectile.transform.rotation = Quaternion.Euler(currentRotation.x, currentRotation.y, -currentRotation.z);
 
             SpriteRenderer spriteRenderer = projectile.GetComponent<SpriteRenderer>();
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.flipX = true;
-            }
+            //if (spriteRenderer != null)
+            //{
+            //    spriteRenderer.flipX = true;
+            //}
 
         }
     }

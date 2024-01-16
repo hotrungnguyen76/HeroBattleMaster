@@ -132,7 +132,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 81734323}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 983341780}
   - component: {fileID: 983341779}
   - component: {fileID: 983341778}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10442,7 +10442,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1353543297}
   - component: {fileID: 1353543298}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BG1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10851,7 +10851,7 @@ MonoBehaviour:
   m_Priority: 10
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 0}
+  m_Follow: {fileID: 1829641510}
   m_Lens:
     FieldOfView: 34
     OrthographicSize: 5.710129
@@ -10975,6 +10975,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1829641510 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1402446257750817986, guid: 9ff8d0c38ea981e479181a7ad44972dc, type: 3}
+  m_PrefabInstance: {fileID: 1617174173}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3302498336808910674
 PrefabInstance:
   m_ObjectHideFlags: 0
